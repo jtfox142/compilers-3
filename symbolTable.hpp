@@ -13,17 +13,17 @@ NOTES
 */
 
 namespace symbolTable {
-    static std::vector<std::string> stack;
-    bool verify(std::string);
+    static std::vector<token::Token> stack;
+    bool verify(token::Token);
 
     class Scope {
         public:
             Scope() {
                 varCount = 0;
             }
-            void push(std::string);
+            void push(token::Token);
             void pop();
-            int find(std::string);
+            int find(token::Token);
             int getVarCount() {
                 return varCount;
             }

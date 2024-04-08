@@ -11,7 +11,7 @@ void tree::printPreorder(node::Node *root, int level) {
         std::cout << "  ";
     }
 
-    std::cout << root->getData() << std::endl;
+    std::cout << root->getData().tokenInstance << std::endl;
     //file << std::setw(level * 2) << root->getData().at(0) << ":" << root->getData() << std::endl;
 
     printPreorder(root->getChildOne(), level+1);

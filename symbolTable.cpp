@@ -4,12 +4,12 @@
 #include <iterator>
 
 //Returns true if an identifier name is used one or fewer times in the entire global stack
-bool symbolTable::verify(std::string tokenName) {
-    std::vector<std::string>::iterator it;
+bool symbolTable::verify(token::Token token) {
+    std::vector<token::Token>::iterator it;
     int numInstances = 0;
 
     for(it = symbolTable::stack.begin(); it < symbolTable::stack.end(); it++) {
-        if(*it == tokenName) {
+        if(it->tokenInstance == token.tokenInstance) {
             numInstances++;
         }
     }
@@ -21,8 +21,8 @@ bool symbolTable::verify(std::string tokenName) {
 }
 
 //Pushes a token onto TOS
-void symbolTable::Scope::push(std::string identifier) {
-    symbolTable::stack.push_back(identifier);
+void symbolTable::Scope::push(token::Token token) {
+    symbolTable::stack.push_back(token);
     varCount++;
 }
 
@@ -32,13 +32,13 @@ void symbolTable::Scope::pop() {
     varCount--;
 }
 
-//Returns distance from TOS if found, returns -1 otherwise
-int symbolTable::Scope::find(std::string tokenInstance) {
-    std::vector<std::string>::iterator it;
+//Returns distance from TOS if string identifier is found, returns -1 otherwise
+int symbolTable::Scope::find(token::Token tokenInstance) {
+    std::vector<token::Token>::iterator it;
     int stackCounter = 0;
 
     for(it = symbolTable::stack.end(); it > symbolTable::stack.begin(); it--) {
-        if(*it == tokenInstance) {
+        if(it->tokenInstance == tokenInstance.tokenInstance) {
             return stackCounter;
         }
         stackCounter++;

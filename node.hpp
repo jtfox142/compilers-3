@@ -1,3 +1,5 @@
+#include "token.hpp"
+
 #ifndef NODE_H
 #define NODE_H
 
@@ -9,8 +11,23 @@ namespace node {
         //All these gets might be useless. If you return a pointer from a get, you typically want it to be immutable (const).
         //However, in order to assign it to the tempNode in tree.cpp, it cannot return a const because the types are incompatible
         public:
-            inline Node(std::string val) {
-                data = val;
+            inline Node(token::Token token) {
+                data = token;
+                childNum = 1;
+                childOne = NULL;
+                childTwo = NULL;
+                childThree = NULL;
+                childFour = NULL;
+                childFive = NULL;
+                childSix = NULL;
+                childSeven = NULL;
+                childEight = NULL;
+            }
+
+            inline Node(std::string tokenInstance) {
+                token::Token *token = new token::Token();
+                token->tokenInstance = tokenInstance;
+                data = *token;
                 childNum = 1;
                 childOne = NULL;
                 childTwo = NULL;
@@ -94,7 +111,7 @@ namespace node {
                 childNum++;
             }
 
-            const std::string getData() {
+            const token::Token getData() {
                 return data;
             }
 
@@ -103,7 +120,7 @@ namespace node {
             }
 
         private:
-            std::string data;
+            token::Token data;
             int childNum;
             Node* childOne;
             Node* childTwo;

@@ -52,7 +52,7 @@ node::Node* parser::parse() {
 //Fetches the next lookahead if the token instance matches the expected value. Exits with an error otherwise
 void match(std::string terminalString, node::Node* root) {
     if(_lookahead.tokenInstance == terminalString) {
-        node::Node* insertNode = new node::Node(_lookahead.tokenInstance);
+        node::Node* insertNode = new node::Node(_lookahead);
         tree::insert(insertNode, root);
         _lookahead = scanner::getNextToken();
     }
@@ -66,7 +66,7 @@ void match(std::string terminalString, node::Node* root) {
 //Overloaded match function for checking tokenIds
 void match(int tokenId, node::Node* root) {
     if(_lookahead.tokenId == tokenId) {
-        node::Node* insertNode = new node::Node(_lookahead.tokenInstance);
+        node::Node* insertNode = new node::Node(_lookahead);
         tree::insert(insertNode, root);
         _lookahead = scanner::getNextToken();
     }

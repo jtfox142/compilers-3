@@ -30,7 +30,7 @@ void statSem::driver() {
 void traversePreorder(node::Node *root) {
     if(root == NULL) return;
 
-    if(root->getData() == "block()")
+    if(root->getData().tokenInstance == "block()")
         processBlock(root);
 
     traversePreorder(root->getChildOne());
@@ -63,15 +63,15 @@ void processVars(node::Node *root, symbolTable::Scope *local) {
     if(root == NULL) return;
 
     //If vars() subtree is not empty, push the identifier onto the stack
-    if(root->getChildOne()->getData() == "create") {
-        std::string identifier = root->getChildTwo()->getData();
+    if(root->getChildOne()->getData().tokenInstance == "create") {
+        token::Token token = root->getChildTwo()->getData();
 
         //Ensure the identifier hasn't been used before
-        if(local->find(identifier) == -1 && _globalSTV->find(identifier) == -1) {
-            local->push(identifier);
+        if(local->find(token) == -1 && _globalSTV->find(token) == -1) {
+            local->push(token);
         }
         else {
-            std::cerr << "Static Semantic Error: Identifier " << identifier << " is declared multiple times.";
+            std::cerr << "Static Semantic Error: Identifier " << token.tokenInstance << " is declared multiple times.";
             exit(1);
         }
     }
@@ -86,7 +86,7 @@ void processStats(node::Node *root, symbolTable::Scope *local) {
     //<stat> -> <in> ; | <out> ; | <block> | <if> ; | <loop1> ; | <loop2> ; | <assign> ; |
     //<goto> ; | <label> ; | <pick> ;  
 
-    if(root->getChildOne()->getData() == "block()")
+    if(root->getChildOne()->getData().tokenInstance == "block()")
         processBlock(root->getChildOne());
     
     //If I push tokens onto the stack instead of strings, then I can simply traverse the tree until an idTok is found
