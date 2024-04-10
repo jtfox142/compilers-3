@@ -3,7 +3,7 @@
 
 namespace statSem {
     
-    void driver();
+    void driver(node::Node*);
 
 }  // namespace statSem
 

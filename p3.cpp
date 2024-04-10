@@ -1,6 +1,7 @@
 #include "scanner.hpp"
 #include "parser.hpp"
 #include "tree.hpp"
+#include "statSem.hpp"
 
 #include <iostream>
 #include <deque>
@@ -44,7 +45,8 @@ int main(int argc, char* argv[]) {
     try {
         scanner::startStream(fileName);
         node::Node* tree = parser::parse();
-        tree::printPreorder(tree, 1);
+        statSem::driver(tree);
+        std::cout << "Okay :) !";
     } catch(const std::exception& ex) {
         std::cerr << ex.what() << '\n';
         exit(1);

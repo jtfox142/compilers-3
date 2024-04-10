@@ -3,7 +3,7 @@
 #include <vector>
 #include <iterator>
 
-//Returns true if an identifier name is used one or fewer times in the entire global stack
+//Returns true if an identifier name is used one time in the entire global stack
 bool symbolTable::verify(token::Token token) {
     std::vector<token::Token>::iterator it;
     int numInstances = 0;
@@ -14,7 +14,7 @@ bool symbolTable::verify(token::Token token) {
         }
     }
 
-    if(numInstances <= 1)
+    if(numInstances == 1)
         return true;
 
     return false;
