@@ -46,7 +46,6 @@ int main(int argc, char* argv[]) {
         scanner::startStream(fileName);
         node::Node* tree = parser::parse();
         statSem::driver(tree);
-        std::cout << "Okay :) !";
     } catch(const std::exception& ex) {
         std::cerr << ex.what() << '\n';
         exit(1);

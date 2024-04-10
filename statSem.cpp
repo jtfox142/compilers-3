@@ -20,32 +20,43 @@ void statSem::driver(node::Node *tree) {
 
     traversePreorder(tree, _globalSTV);
 
-    //Traverse the parse tree.
+    std::cout << "Program successfully passed static semantic check." << std::endl;
 }
 
 //root, left, middle, right
 void traversePreorder(node::Node *root, symbolTable::Scope *scope) {
     if(root == NULL) return;
+    std::cout << "Current Token: " << root->getData().tokenInstance << std::endl;
 
     if(root->getData().tokenInstance == "block()") {
-        std::cout << "1\n";
+        std::cout << "Calling block()\n";
         //Create a new scope to operate in
         processBlock(root);
+        return;
     }
     else if(root->getData().tokenInstance == "vars()") {
         //Add the identifiers to the stack
-        std::cout << "2\n";
+        std::cout << "Calling vars()\n";
         processVars(root, scope);
+        return;
     }
     else if(root->getData().tokenInstance == "func()") { //<func> -> func Identifier <block>
         //skip processing func identifier
-        std::cout << "3\n";
+        std::cout << "Calling func()\n";
         traversePreorder(root->getChildThree(), scope);
+        return;
+    }
+    else if(root->getData().tokenInstance == "goto()") { //<goto> -> jump Identifier
+        //skip processing function identifier, because I'm only supposed to process vars
+        std::cout << "Skipping goto()\n";
+        return;
     }
     else if(root->getData().tokenId == token::idTok) {
-        std::cout << "4\n";
+        std::cout << "Line " << root->getData().lineNumber << ": calling processIdentifier() for " << root->getData().tokenInstance << std::endl;
         processIdentifier(root, scope);
     }
+
+    std::cout << "Traversing\n";
 
     traversePreorder(root->getChildOne(), scope);
     traversePreorder(root->getChildTwo(), scope);
@@ -81,24 +92,20 @@ void processVars(node::Node *root, symbolTable::Scope *local) {
     //<vars> -> empty | create Identifier ; | create Identifier := Integer ; <vars>
     if(root == NULL || root->getChildOne() == NULL) return;
 
-    std::cout<< "In vars(). Proof: " << root->getData().tokenInstance << std::endl;
-    std::cout<< "Token I am trying to check on: " << root->getChildOne()->getData().tokenInstance << std::endl;
     std::cout<< "Identifier: " << root->getChildTwo()->getData().tokenInstance << std::endl;
 
     //If vars() subtree is not empty, push the identifier onto the stack
     if(root->getChildOne()->getData().tokenInstance == "create") {
-        std::cout << "7\n";
         token::Token token = root->getChildTwo()->getData();
-        std::cout << "8\n";
 
         //Ensure the identifier hasn't been used before
         if(local->find(token) == -1 && symbolTable::verify(token) == false) {
             std::cout << "Pushing token " << token.tokenInstance << " onto the stack.\n";
             local->push(token);
-            std::cout << "10\n";
+            std::cout << "Token pushed successfully\n";
         }
         else {
-            std::cerr << "Static Semantic Error: Identifier " << token.tokenInstance << " is declared multiple times.";
+            std::cerr << "ERROR Line " << token.lineNumber << ": Identifier " << token.tokenInstance << " is declared multiple times.";
             exit(1);
         }
     }
@@ -113,7 +120,7 @@ void processIdentifier(node::Node *root, symbolTable::Scope *local) {
     if(local->find(root->getData()) == -1) {
         bool inGlobal = symbolTable::verify(root->getData());
         if(!inGlobal) {
-            std::cerr << "Line: " << root->getData().lineNumber << "Variable " << root->getData().tokenInstance 
+            std::cerr << "ERROR Line " << root->getData().lineNumber << ": Variable " << root->getData().tokenInstance 
                 << " is not declared in this scope." << std::endl;
             exit(1);
         }

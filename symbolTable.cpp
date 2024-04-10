@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <iterator>
+#include <iostream>
 
 //Returns true if an identifier name is used one time in the entire global stack
 bool symbolTable::verify(token::Token token) {
@@ -23,11 +24,13 @@ bool symbolTable::verify(token::Token token) {
 //Pushes a token onto TOS
 void symbolTable::Scope::push(token::Token token) {
     symbolTable::stack.push_back(token);
+    std::cout << symbolTable::stack.back().tokenInstance << " has been pushed to the stack.\n";
     varCount++;
 }
 
 //Removes a token from TOS
 void symbolTable::Scope::pop() {
+    std::cout << "Popping " << symbolTable::stack.back().tokenInstance << " from the stack.\n";
     symbolTable::stack.pop_back();
     varCount--;
 }
