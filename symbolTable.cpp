@@ -39,20 +39,23 @@ void symbolTable::Scope::pop() {
 //Returns distance from TOS if string identifier is found, returns -1 otherwise
 int symbolTable::Scope::find(token::Token tokenInstance) {
     std::cout << "Do I make it into find()?\n";
-    std::vector<token::Token>::iterator it;
+    std::vector<token::Token>::reverse_iterator it;
     int stackCounter = 0;
 
 
     //Maybe prevents segFault
-    it = symbolTable::stack.end();
-    if(it == symbolTable::stack.begin()) {
+    /*it = symbolTable::stack.rend();
+
+    if(it == symbolTable::stack.rbegin()) {
+        std::cout << "stack end == stack begin\n";
         return -1;
     }
 
     std::string stopsegfault = it->tokenInstance;
+    std::cout << "Token instance: " << stopsegfault << std::endl;*/
     std::cout << "About to enter for loop in find()\n";
     
-    for(it = symbolTable::stack.end(); it > symbolTable::stack.begin(); it--) {
+    for(it = symbolTable::stack.rbegin(); it != symbolTable::stack.rend(); it++) {
         std::cout << "inside of for loop\n";
         if(it->tokenInstance == tokenInstance.tokenInstance) {
             std::cout << "returning stackCounter\n";
