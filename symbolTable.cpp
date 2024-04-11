@@ -50,6 +50,7 @@ int symbolTable::Scope::find(token::Token tokenInstance) {
             std::cout << "returning stackCounter\n";
             return stackCounter;
         }
+        std::cout << "incrementing stackCounter\n";
         stackCounter++;
     }
 
