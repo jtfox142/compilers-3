@@ -23,6 +23,7 @@ bool symbolTable::verify(token::Token token) {
 
 //Pushes a token onto TOS
 void symbolTable::Scope::push(token::Token token) {
+    std::cout << "abt to push\n";
     symbolTable::stack.push_back(token);
     std::cout << symbolTable::stack.back().tokenInstance << " has been pushed to the stack.\n";
     varCount++;
