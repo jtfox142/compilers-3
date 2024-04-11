@@ -93,7 +93,7 @@ void processVars(node::Node *root, symbolTable::Scope *local) {
     if(root == NULL || root->getChildOne() == NULL) return;
 
     std::cout<< "Identifier: " << root->getChildTwo()->getData().tokenInstance << std::endl;
-
+    std::cout<< "root->getChildOne(): " << root->getChildOne()->getData().tokenInstance << std::endl;
     //If vars() subtree is not empty, push the identifier onto the stack
     if(root->getChildOne()->getData().tokenInstance == "create") {
         token::Token token = root->getChildTwo()->getData();
