@@ -38,8 +38,11 @@ void symbolTable::Scope::pop() {
 
 //Returns distance from TOS if string identifier is found, returns -1 otherwise
 int symbolTable::Scope::find(token::Token tokenInstance) {
+    std::cout << "Do I make it into find()?\n";
     std::vector<token::Token>::iterator it;
     int stackCounter = 0;
+
+    std::cout << "About to enter for loop in find()\n";
 
     for(it = symbolTable::stack.end(); it > symbolTable::stack.begin(); it--) {
         if(it->tokenInstance == tokenInstance.tokenInstance) {

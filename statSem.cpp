@@ -99,9 +99,9 @@ void processVars(node::Node *root, symbolTable::Scope *local) {
     if(root->getChildOne()->getData().tokenInstance == "create") {
         token::Token token = root->getChildTwo()->getData();
 
-        std::cout << "segFault in local->find? maybe verify?\n";
+        std::cout << "segFault in local->find.\n";
         //Ensure the identifier hasn't been used before
-        if(symbolTable::verify(token) == false) {
+        if(local->find(token) == -1 && symbolTable::verify(token) == false) {
             std::cout << "Pushing token " << token.tokenInstance << " onto the stack.\n";
             local->push(token);
             std::cout << "Token pushed successfully\n";
