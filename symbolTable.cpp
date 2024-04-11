@@ -45,11 +45,14 @@ int symbolTable::Scope::find(token::Token tokenInstance) {
     std::cout << "About to enter for loop in find()\n";
 
     for(it = symbolTable::stack.end(); it > symbolTable::stack.begin(); it--) {
+        std::cout << "inside of for loop\n";
         if(it->tokenInstance == tokenInstance.tokenInstance) {
+            std::cout << "returning stackCounter\n";
             return stackCounter;
         }
         stackCounter++;
     }
 
+    std::cout << "returning -1\n";
     return -1;
 }
