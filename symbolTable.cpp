@@ -42,9 +42,10 @@ int symbolTable::Scope::find(token::Token tokenInstance) {
     std::vector<token::Token>::iterator it;
     int stackCounter = 0;
 
+    std::string stopsegfault = tokenInstance.tokenInstance;
     std::cout << "About to enter for loop in find()\n";
 
-    //Prevents segFault
+    //Maybe prevents segFault
     it = symbolTable::stack.end();
     if(it == symbolTable::stack.begin()) {
         return -1;
