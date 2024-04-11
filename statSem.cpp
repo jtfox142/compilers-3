@@ -1,6 +1,7 @@
 #include "parser.hpp"
 #include "statSem.hpp"
 #include "symbolTable.hpp"
+#include "token.hpp"
 
 //Prototypes
 void processBlock(node::Node*);
